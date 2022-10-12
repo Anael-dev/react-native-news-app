@@ -10,7 +10,7 @@
 
 ## Setup
 
-1. Clone the repo with `git clone https://github.com/Anael-dev/react-native-project.git` command
+1. Clone the repo with `git clone https://github.com/Anael-dev/react-native-news-app.git` command
 2. Switch to the project's root directory in terminal
 3. Install project dependencies by running `npm install`
 4. Run `npm start` to start the development server
@@ -19,17 +19,9 @@
 
 ## Usage
 
-Replace the contents of `README.md` with your project's:
-
-- Name
-- Description
-- Installation instructions
-- Usage instructions
-- Support instructions
-- Contributing instructions
-- Licence
-
-Feel free to remove any sections that aren't applicable to your project.
+- Filter News By Search Query
+- Filter News By Categories
+- Navigate to Article Page
 
 ## License
 
