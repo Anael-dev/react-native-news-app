@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useState } from 'react';
 
-import { NEWS_API_ENTRY_POINT, NEWS_API_KEY } from '../api';
+import { NEWS_API_ENTRY_POINT, NEWS_API_KEY } from 'react-native-dotenv';
 
 function useFetchNews() {
 	const [results, setResults] = useState([]);
