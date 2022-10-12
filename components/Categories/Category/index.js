@@ -3,8 +3,12 @@ import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 function Category({ name, onCategoryPress, isSelected }) {
 	const handlePress = useCallback(() => {
-		onCategoryPress(name);
-	}, [onCategoryPress]);
+		if (isSelected) {
+			onCategoryPress('');
+		} else {
+			onCategoryPress(name);
+		}
+	}, [onCategoryPress, isSelected]);
 
 	return (
 		<TouchableOpacity

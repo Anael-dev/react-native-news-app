@@ -11,7 +11,8 @@ function useFetchNews() {
 			const { data } = await axios.get(
 				`${NEWS_API_ENTRY_POINT}/top-headlines?q=${query}&category=${category}&apiKey=${NEWS_API_KEY}`
 			);
-			if (data?.articles) {
+
+			if (data.status === 'ok' && data?.articles) {
 				setResults(data.articles);
 			} else {
 				setResults([]);

@@ -20,10 +20,10 @@ function Categories({ onCategoryPress, selectedCategory }) {
 
 const styles = StyleSheet.create({
 	container: {
-		flex: 1,
 		flexWrap: 'wrap',
 		flexDirection: 'row',
 		justifyContent: 'center',
+		paddingBottom: 10,
 	},
 });
 

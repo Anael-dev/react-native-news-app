@@ -14,9 +14,7 @@ function NewsHub() {
 	const { fetchNewsAction, results } = useFetchNews();
 
 	const fetchFilteredNews = useCallback(async () => {
-		if (searchQuery) {
-			fetchNewsAction(searchQuery, selectedCategory);
-		}
+		fetchNewsAction(searchQuery, selectedCategory);
 	}, [searchQuery, selectedCategory]);
 
 	useEffect(() => {
@@ -39,8 +37,10 @@ function NewsHub() {
 						styles.emptyListQuery
 					}>{`No results found for "${searchQuery}"`}</Text>
 			);
+		} else {
+			return <Text style={styles.emptyListQuery}>No Data Available</Text>;
 		}
-	}, [styles.emptyListQuery]);
+	}, [styles.emptyListQuery, searchQuery]);
 
 	return (
 		<View style={styles.container}>
@@ -53,17 +53,19 @@ function NewsHub() {
 					onCategoryPress={setSelectedCategory}
 					selectedCategory={selectedCategory}
 				/>
-				<KeyboardAwareFlatList
-					keyboardShouldPersistTaps='always'
-					data={results}
-					keyExtractor={keyExtractor}
-					renderItem={renderItem}
-					shouldRasterizeIOS
-					renderToHardwareTextureAndroid
-					removeClippedSubviews={false}
-					ListEmptyComponent={emptyListView}
-					scrollEnabled={results.length > 0}
-				/>
+				<View style={styles.container}>
+					<KeyboardAwareFlatList
+						keyboardShouldPersistTaps='always'
+						data={results}
+						keyExtractor={keyExtractor}
+						renderItem={renderItem}
+						shouldRasterizeIOS
+						renderToHardwareTextureAndroid
+						removeClippedSubviews={false}
+						ListEmptyComponent={emptyListView}
+						scrollEnabled={results.length > 0}
+					/>
+				</View>
 			</SafeAreaView>
 		</View>
 	);
@@ -76,6 +78,7 @@ const styles = StyleSheet.create({
 	emptyListQuery: {
 		flex: 1,
 		paddingTop: 30,
+		textAlign: 'center',
 	},
 });
 
