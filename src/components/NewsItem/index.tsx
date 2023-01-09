@@ -1,20 +1,20 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import {
   Image,
-  StyleSheet,
   Text,
   TouchableOpacity,
   useWindowDimensions,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import RenderHtml from "react-native-render-html";
-import { StackNavigationProp } from "@react-navigation/stack";
 
 import {
   IMAGE_SIZE,
   MAX_DESCRIPTION_CHARS,
   PLACEHOLDER_IMAGE_URL,
 } from "./consts";
+import styled from "styled-components";
+import { NavigationType } from "../Navigator";
 
 export interface Article {
   author: null | string;
@@ -39,22 +39,23 @@ type NewsItemProps = {
 const NewsItem: React.FC<NewsItemProps> = ({ data }) => {
   const { title, publishedAt, urlToImage, description, content, author } = data;
   const { width } = useWindowDimensions();
-  const navigation = useNavigation<StackNavigationProp<any>>();
+  const navigation = useNavigation<NavigationType>();
+
+  useEffect(() => console.log("render"), [data]);
 
   const articleImage = useMemo((): JSX.Element => {
     if (urlToImage) {
-      return <Image source={{ uri: urlToImage }} style={styles.image} />;
+      return <ItemImage source={{ uri: urlToImage }} />;
     } else {
       return (
-        <Image
+        <ItemImage
           source={{
             uri: PLACEHOLDER_IMAGE_URL,
           }}
-          style={styles.image}
         />
       );
     }
-  }, [urlToImage, styles.image]);
+  }, [urlToImage]);
 
   const formattedPublishedDate = useMemo((): string => {
     return new Date(publishedAt).toLocaleString();
@@ -71,42 +72,35 @@ const NewsItem: React.FC<NewsItemProps> = ({ data }) => {
         content,
       });
     }
-  }, [navigation]);
+  }, [navigation, formattedPublishedDate]);
 
   return (
-    <TouchableOpacity
-      activeOpacity={0.7}
-      onPress={handlePress}
-      style={styles.container}
-    >
+    <TouchableContainer activeOpacity={0.7} onPress={handlePress}>
       <RenderHtml contentWidth={width} source={{ html: title }} />
-      <Text style={styles.text}>{formattedPublishedDate}</Text>
+      <ItemText>{formattedPublishedDate}</ItemText>
       {articleImage}
-      <Text style={styles.text}>
-        {description?.substring(0, MAX_DESCRIPTION_CHARS)}
-      </Text>
-    </TouchableOpacity>
+      <ItemText>{description?.substring(0, MAX_DESCRIPTION_CHARS)}</ItemText>
+    </TouchableContainer>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    borderRadius: 5,
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    margin: 10,
-    backgroundColor: "#EFEFEF",
-    borderWidth: 1,
-    borderColor: "#9D9D9D",
-  },
-  text: { fontSize: 14, paddingVertical: 5 },
-  selectedButtonText: {
-    fontWeight: "600",
-  },
-  image: {
-    width: IMAGE_SIZE,
-    height: IMAGE_SIZE,
-  },
-});
+const TouchableContainer = styled(TouchableOpacity)`
+  border-radius: 5px;
+  padding-horizontal: 16px;
+  padding-vertical: 8px;
+  margin: 10px;
+  background-color: "#EFEFEF";
+  border-width: 1px;
+  border-color: "#9D9D9D";
+`;
 
+const ItemText = styled(Text)`
+  font-size: 14px;
+  padding-vertical: 5px;
+`;
+
+const ItemImage = styled(Image)`
+  width: ${IMAGE_SIZE}px;
+  height: ${IMAGE_SIZE}px;
+`;
 export default NewsItem;

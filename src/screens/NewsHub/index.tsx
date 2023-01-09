@@ -1,19 +1,15 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import {
-  StatusBar,
-  StyleSheet,
-  Text,
-  View,
-  ListRenderItem,
-} from "react-native";
+import React, { useCallback, useMemo, useState } from "react";
+import { ListRenderItem, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { KeyboardAwareFlatList } from "react-native-keyboard-aware-scroll-view";
 import { useQuery } from "react-query";
+import styled from "styled-components";
 
 import Categories from "../../components/Categories";
 import SearchBar from "../../components/SearchBar";
-import { fetchNewsAction } from "../../hooks/useFetchNews";
+import fetchNewsAction from "../../api/fetchNewsAction";
 import NewsItem, { Article } from "../../components/NewsItem";
+import EmptyListPlaceholder from "../../components/EmptyListPlaceholder";
 
 export interface NewsResponseType {
   status: string;
@@ -24,7 +20,12 @@ export interface NewsResponseType {
 function NewsHub() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
-  const { data: results, refetch } = useQuery<NewsResponseType, undefined>(
+  const {
+    data: results,
+    refetch,
+    isLoading,
+    isFetching,
+  } = useQuery<NewsResponseType | undefined>(
     ["news", { searchQuery, selectedCategory }],
     async () => await fetchNewsAction(searchQuery, selectedCategory)
   );
@@ -34,34 +35,31 @@ function NewsHub() {
     []
   );
   const renderItem: ListRenderItem<Article> = useCallback(
-    ({ item }): JSX.Element => {
-      return <NewsItem data={item} />;
-    },
+    ({ item }): JSX.Element => <NewsItem data={item} />,
     []
   );
 
   const emptyListView = useMemo((): JSX.Element => {
+    if (isLoading || isFetching) {
+      return <EmptyListPlaceholder text="Loading..." />;
+    }
     if (searchQuery) {
       return (
-        <Text
-          style={styles.emptyListQuery}
-        >{`No results found for "${searchQuery}"`}</Text>
+        <EmptyListPlaceholder text={`No results found for "${searchQuery}"`} />
       );
-    } else {
-      return <Text style={styles.emptyListQuery}>No Data Available</Text>;
     }
-  }, [styles.emptyListQuery, searchQuery]);
+    return <EmptyListPlaceholder />;
+  }, [searchQuery, isLoading, isFetching]);
 
   return (
-    <View style={styles.container}>
-      <StatusBar animated />
-      <SafeAreaView style={styles.container}>
+    <Container>
+      <SafeAreaViewContainer>
         <SearchBar onChange={setSearchQuery} onSubmit={refetch} />
         <Categories
           onCategoryPress={setSelectedCategory}
           selectedCategory={selectedCategory}
         />
-        <View style={styles.container}>
+        <Container>
           <KeyboardAwareFlatList
             keyboardShouldPersistTaps="always"
             data={results?.articles}
@@ -73,21 +71,18 @@ function NewsHub() {
             ListEmptyComponent={emptyListView}
             scrollEnabled={!!results?.articles?.length}
           />
-        </View>
-      </SafeAreaView>
-    </View>
+        </Container>
+      </SafeAreaViewContainer>
+    </Container>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  emptyListQuery: {
-    flex: 1,
-    paddingTop: 30,
-    textAlign: "center",
-  },
-});
+const Container = styled(View)`
+  flex: 1;
+`;
+
+const SafeAreaViewContainer = styled(SafeAreaView)`
+  flex: 1;
+`;
 
 export default NewsHub;

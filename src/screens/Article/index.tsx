@@ -2,7 +2,6 @@ import React, { useCallback } from "react";
 import {
   Image,
   ScrollView,
-  StyleSheet,
   Text,
   TouchableOpacity,
   useWindowDimensions,
@@ -17,8 +16,9 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import RenderHtml from "react-native-render-html";
 import { AntDesign } from "@expo/vector-icons";
 import { StackNavigationProp } from "@react-navigation/stack";
+import styled from "styled-components";
 
-import { RootStackParamList } from "../../App";
+import { RootStackParamList } from "../../components/Navigator";
 
 const IMAGE_SIZE = 100;
 
@@ -40,40 +40,40 @@ function Article() {
   }, [navigation]);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaViewContainer>
       <TouchableOpacity onPress={handleClickBack}>
         <AntDesign name="caretleft" size={24} color="black" />
       </TouchableOpacity>
-      <ScrollView style={styles.content}>
+      <ScrollViewContainer>
         <RenderHtml contentWidth={width} source={{ html: title }} />
-        <Text style={styles.text}>{publishedAt.toString()}</Text>
-        <Text style={styles.text}>{author}</Text>
-        {urlToImage && (
-          <Image source={{ uri: urlToImage }} style={styles.image} />
-        )}
-        <Text style={styles.text}>{description}</Text>
+        <ArticleText>{publishedAt.toString()}</ArticleText>
+        <ArticleText>{author}</ArticleText>
+        {urlToImage && <ArticleImage source={{ uri: urlToImage }} />}
+        <ArticleText>{description}</ArticleText>
         {content && (
           <RenderHtml contentWidth={width} source={{ html: content }} />
         )}
-      </ScrollView>
-    </SafeAreaView>
+      </ScrollViewContainer>
+    </SafeAreaViewContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingHorizontal: 20,
-  },
-  text: {
-    paddingVertical: 10,
-  },
-  image: {
-    width: IMAGE_SIZE,
-    height: IMAGE_SIZE,
-  },
-  content: {
-    paddingVertical: 20,
-  },
-});
+const SafeAreaViewContainer = styled(SafeAreaView)`
+  flex: 1;
+  padding-horizontal: 20px;
+`;
+
+const ScrollViewContainer = styled(ScrollView)`
+  padding-vertical: 30px;
+`;
+
+const ArticleText = styled(Text)`
+  padding-vertical: 10px;
+`;
+
+const ArticleImage = styled(Image)`
+  width: ${IMAGE_SIZE}px;
+  height: ${IMAGE_SIZE}px;
+`;
+
 export default Article;
