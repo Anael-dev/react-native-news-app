@@ -41,8 +41,6 @@ const NewsItem: React.FC<NewsItemProps> = ({ data }) => {
   const { width } = useWindowDimensions();
   const navigation = useNavigation<NavigationType>();
 
-  useEffect(() => console.log("render"), [data]);
-
   const articleImage = useMemo((): JSX.Element => {
     if (urlToImage) {
       return <ItemImage source={{ uri: urlToImage }} />;
