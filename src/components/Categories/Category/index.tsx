@@ -36,10 +36,10 @@ const CategoryButton = styled(TouchableOpacity)<{
   isSelected: boolean;
 }>`
   border-radius: 7px;
-  padding-horizontal: 10px;
+  padding-horizontal: 15px;
   padding-vertical: 8px;
   margin-vertical: 5px;
-  margin-right: 10px;
+  margin: 5px;
   background-color: ${({ isSelected }) => (isSelected ? "#00B49F" : "#01F0D9")};
 `;
 
@@ -47,8 +47,8 @@ const CategoryText = styled(Text)<{
   isSelected: boolean;
 }>`
   font-size: 14px;
-  text-align: "center";
-  font-weight: ${({ isSelected }) => (isSelected ? "600" : "400")};
+  text-align: center;
+  font-weight: ${({ isSelected }) => (isSelected ? 600 : 400)};
 `;
 
 export default Category;

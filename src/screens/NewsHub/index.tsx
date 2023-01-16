@@ -16,6 +16,11 @@ export interface NewsResponseType {
   totalResults: number;
   articles: Article[];
 }
+interface Id {
+  id: string;
+}
+
+export type ArticleWithId = Article & Id;
 
 function NewsHub() {
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -25,17 +30,24 @@ function NewsHub() {
     refetch,
     isLoading,
     isFetching,
-  } = useQuery<NewsResponseType | undefined>(
+  } = useQuery<ArticleWithId[] | undefined>(
     ["news", { searchQuery, selectedCategory }],
     async () => await fetchNewsAction(searchQuery, selectedCategory)
   );
 
   const keyExtractor = useCallback(
-    (item: Article, index: number) => `${item.source.name}${index}`,
+    (item: Article) => `${item.publishedAt}${item.title}`,
     []
   );
-  const renderItem: ListRenderItem<Article> = useCallback(
-    ({ item }): JSX.Element => <NewsItem data={item} />,
+
+  const renderItem: ListRenderItem<ArticleWithId> = useCallback(
+    ({ item }): JSX.Element => {
+      return (
+        <NewsItem
+          data={item}
+        />
+      );
+    },
     []
   );
 
@@ -62,14 +74,14 @@ function NewsHub() {
         <Container>
           <KeyboardAwareFlatList
             keyboardShouldPersistTaps="always"
-            data={results?.articles}
+            data={results}
             keyExtractor={keyExtractor}
             renderItem={renderItem}
             shouldRasterizeIOS
             renderToHardwareTextureAndroid
             removeClippedSubviews={false}
             ListEmptyComponent={emptyListView}
-            scrollEnabled={!!results?.articles?.length}
+            scrollEnabled={!!results?.length}
           />
         </Container>
       </SafeAreaViewContainer>

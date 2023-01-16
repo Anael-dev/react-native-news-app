@@ -9,8 +9,9 @@ import { Article as ArticleInterface } from "../NewsItem";
 import NewsHub from "../../screens/NewsHub";
 
 interface AricleScreenParams
-  extends Omit<ArticleInterface, "publishedAt" | "source" | "url"> {
+  extends Omit<ArticleInterface, "publishedAt" | "source"> {
   publishedAt: string;
+  id: string;
 }
 
 export type RootStackParamList = {

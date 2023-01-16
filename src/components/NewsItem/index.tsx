@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import {
   Image,
   Text,
@@ -15,6 +15,7 @@ import {
 } from "./consts";
 import styled from "styled-components";
 import { NavigationType } from "../Navigator";
+import { ArticleWithId } from "../../screens/NewsHub";
 
 export interface Article {
   author: null | string;
@@ -33,11 +34,21 @@ export interface Source {
 }
 
 type NewsItemProps = {
-  data: Article;
+  data: ArticleWithId;
 };
 
 const NewsItem: React.FC<NewsItemProps> = ({ data }) => {
-  const { title, publishedAt, urlToImage, description, content, author } = data;
+  const {
+    title,
+    publishedAt,
+    urlToImage,
+    description,
+    content,
+    author,
+    url,
+    id,
+  } = data;
+
   const { width } = useWindowDimensions();
   const navigation = useNavigation<NavigationType>();
 
@@ -68,6 +79,8 @@ const NewsItem: React.FC<NewsItemProps> = ({ data }) => {
         urlToImage,
         description,
         content,
+        url,
+        id,
       });
     }
   }, [navigation, formattedPublishedDate]);
@@ -87,9 +100,9 @@ const TouchableContainer = styled(TouchableOpacity)`
   padding-horizontal: 16px;
   padding-vertical: 8px;
   margin: 10px;
-  background-color: "#EFEFEF";
+  background-color: #efefef;
   border-width: 1px;
-  border-color: "#9D9D9D";
+  border-color: #9d9d9d;
 `;
 
 const ItemText = styled(Text)`

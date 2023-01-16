@@ -27,10 +27,9 @@ const Categories: React.FC<CategoriesProps> = ({
 );
 
 const CategoriesContainer = styled(View)`
-  flex-wrap: "wrap";
-  flex-direction: "row";
-  justify-content: "center";
-  padding-bottom: 10px;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
 `;
 
 export default memo(Categories);

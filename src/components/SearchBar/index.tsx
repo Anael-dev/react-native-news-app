@@ -30,14 +30,14 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSubmit, onChange }) => {
 };
 
 const Container = styled(View)`
-  background-color: "#D5D5D5";
+  background-color: #D5D5D5;
   height: 50px;
   margin-horizontal: 16px;
   margin-vertical: 20px;
   border-radius: 5px;
-  flex-direction: "row";
-  justify-content: "space-between";
-  align-items: "center";
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const TextInputContainer = styled(TextInput)`

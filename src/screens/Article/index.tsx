@@ -1,10 +1,11 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import {
   Image,
   ScrollView,
   Text,
   TouchableOpacity,
   useWindowDimensions,
+  View,
 } from "react-native";
 import {
   useNavigation,
@@ -19,17 +20,36 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import styled from "styled-components";
 
 import { RootStackParamList } from "../../components/Navigator";
-
-const IMAGE_SIZE = 100;
+import insertUserReview from "../../api/insertUserReview";
+import { IMAGE_SIZE } from "./consts";
+import FavoriteButton from "../../components/FavoriteButton";
 
 type ArticeleScreenRouteProp = RouteProp<RootStackParamList, "Article">;
 
 function Article() {
   const {
-    params: { title, publishedAt, author, urlToImage, description, content },
+    params: {
+      title,
+      publishedAt,
+      author,
+      urlToImage,
+      description,
+      content,
+      url: link,
+      id,
+    },
   } = useRoute<ArticeleScreenRouteProp>();
   const { width } = useWindowDimensions();
   const navigation = useNavigation<StackNavigationProp<any>>();
+
+  const handlePageMount = useCallback(
+    () => insertUserReview({ title, link, id }),
+    [title, link, id]
+  );
+
+  useEffect(() => {
+    handlePageMount();
+  }, [handlePageMount]);
 
   const handleClickBack = useCallback(() => {
     if (navigation.isFocused()) {
@@ -41,9 +61,19 @@ function Article() {
 
   return (
     <SafeAreaViewContainer>
-      <TouchableOpacity onPress={handleClickBack}>
-        <AntDesign name="caretleft" size={24} color="black" />
-      </TouchableOpacity>
+      <NavBar>
+        <TouchableOpacity onPress={handleClickBack}>
+          <AntDesign name="caretleft" size={24} color="black" />
+        </TouchableOpacity>
+        <FavoriteButton
+          {...{
+            title,
+            link,
+            description,
+            id,
+          }}
+        />
+      </NavBar>
       <ScrollViewContainer>
         <RenderHtml contentWidth={width} source={{ html: title }} />
         <ArticleText>{publishedAt.toString()}</ArticleText>
@@ -61,6 +91,11 @@ function Article() {
 const SafeAreaViewContainer = styled(SafeAreaView)`
   flex: 1;
   padding-horizontal: 20px;
+`;
+
+const NavBar = styled(View)`
+  flex-direction: row;
+  justify-content: space-between;
 `;
 
 const ScrollViewContainer = styled(ScrollView)`
