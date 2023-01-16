@@ -7,7 +7,7 @@ import {
   deleteFavorite,
   InsertArgs,
   insertFavorite,
-} from "../../api/favoritesActions";
+} from "../../api/salesforceOrg/favoritesActions";
 import { useFavoritesContext } from "../../context/useFavoriteContext";
 
 type ButtonProps = InsertArgs;

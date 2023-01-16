@@ -1,7 +1,7 @@
 import axios from "axios";
 import { NEWS_API_KEY } from "react-native-dotenv";
 import uuid from "react-native-uuid";
-import { Article } from "../components/NewsItem";
+import { Article } from "../../components/NewsItem";
 
 export async function fetchNewsAction(query: string, category: string) {
   try {

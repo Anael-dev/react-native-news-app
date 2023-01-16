@@ -1,4 +1,4 @@
-import SalesforceApi from "./SalesforceApi";
+import OrgApi from "./OrgApi";
 
 type InsertArgs = {
   title: string;
@@ -8,7 +8,7 @@ type InsertArgs = {
 
 export async function insertUserReview(insertData: InsertArgs) {
   try {
-    const { data } = await SalesforceApi.post(
+    const { data } = await OrgApi.post(
       `/services/apexrest/user_session`,
       insertData
     );

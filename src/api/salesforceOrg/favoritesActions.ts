@@ -1,4 +1,4 @@
-import SalesforceApi from "./SalesforceApi";
+import OrgApi from "./OrgApi";
 
 export type InsertArgs = {
   title: string;
@@ -9,9 +9,7 @@ export type InsertArgs = {
 
 export async function getAllFavorites() {
   try {
-    const { data } = await SalesforceApi.get(
-      `/services/apexrest/favorite_article`
-    );
+    const { data } = await OrgApi.get(`/services/apexrest/favorite_article`);
     //remove logs
     console.log("getAllFavorites: ", data?.result);
     return data?.result;
@@ -22,7 +20,7 @@ export async function getAllFavorites() {
 
 export async function insertFavorite(insertData: InsertArgs) {
   try {
-    const { data } = await SalesforceApi.post(
+    const { data } = await OrgApi.post(
       `/services/apexrest/favorite_article`,
       insertData
     );
@@ -37,7 +35,7 @@ export async function insertFavorite(insertData: InsertArgs) {
 
 export async function deleteFavorite(articleId: string) {
   try {
-    const { data } = await SalesforceApi.delete(
+    const { data } = await OrgApi.delete(
       `/services/apexrest/favorite_article/${articleId}`
     );
     //remove logs

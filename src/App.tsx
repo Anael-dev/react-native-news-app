@@ -5,7 +5,7 @@ import { StatusBar } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import Navigator from "./components/Navigator";
-import fetchAccsessToken from "./api/fetchAccessToken";
+import fetchAccsessToken from "./api/salesforceAuth/fetchAccessToken";
 import { FavoritesContextProvider } from "./context/FavoritesContext";
 
 const queryClient = new QueryClient();

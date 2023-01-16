@@ -1,7 +1,7 @@
 import React, { createContext, useContext } from "react";
 import { useQuery } from "react-query";
 
-import { getAllFavorites } from "../api/favoritesActions";
+import { getAllFavorites } from "../api/salesforceOrg/favoritesActions";
 
 export type FavoritesContextValue = {
   favorites: Favorite;

@@ -20,7 +20,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import styled from "styled-components";
 
 import { RootStackParamList } from "../../components/Navigator";
-import insertUserReview from "../../api/insertUserReview";
+import insertUserReview from "../../api/salesforceOrg/insertUserReview";
 import { IMAGE_SIZE } from "./consts";
 import FavoriteButton from "../../components/FavoriteButton";
 

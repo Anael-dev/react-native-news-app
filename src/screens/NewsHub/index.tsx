@@ -7,7 +7,7 @@ import styled from "styled-components";
 
 import Categories from "../../components/Categories";
 import SearchBar from "../../components/SearchBar";
-import fetchNewsAction from "../../api/fetchNewsAction";
+import fetchNewsAction from "../../api/newsApi/fetchNewsAction";
 import NewsItem, { Article } from "../../components/NewsItem";
 import EmptyListPlaceholder from "../../components/EmptyListPlaceholder";
 
@@ -42,11 +42,7 @@ function NewsHub() {
 
   const renderItem: ListRenderItem<ArticleWithId> = useCallback(
     ({ item }): JSX.Element => {
-      return (
-        <NewsItem
-          data={item}
-        />
-      );
+      return <NewsItem data={item} />;
     },
     []
   );
