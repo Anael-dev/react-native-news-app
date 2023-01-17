@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useState } from "react";
 import { ListRenderItem, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { KeyboardAwareFlatList } from "react-native-keyboard-aware-scroll-view";
@@ -36,29 +36,11 @@ function NewsHub() {
     async () => await fetchNewsAction(searchQuery, selectedCategory)
   );
 
-  const keyExtractor = useCallback(
-    (item: Article) => `${item.publishedAt}${item.title}`,
-    []
-  );
+  const keyExtractor = (item: Article) => `${item.publishedAt}${item.title}`;
 
-  const renderItem: ListRenderItem<ArticleWithId> = useCallback(
-    ({ item }): JSX.Element => {
-      return <NewsItem data={item} />;
-    },
-    []
-  );
-
-  const emptyListView = useMemo((): JSX.Element => {
-    if (isLoading || isFetching) {
-      return <Loader />;
-    }
-    if (searchQuery) {
-      return (
-        <EmptyListPlaceholder text={`No results found for "${searchQuery}"`} />
-      );
-    }
-    return <EmptyListPlaceholder />;
-  }, [searchQuery, isLoading, isFetching]);
+  const renderItem: ListRenderItem<ArticleWithId> = ({ item }): JSX.Element => {
+    return <NewsItem data={item} />;
+  };
 
   return (
     <Container>
@@ -77,7 +59,17 @@ function NewsHub() {
             shouldRasterizeIOS
             renderToHardwareTextureAndroid
             removeClippedSubviews={false}
-            ListEmptyComponent={emptyListView}
+            ListEmptyComponent={
+              isLoading || isFetching ? (
+                <Loader />
+              ) : searchQuery ? (
+                <EmptyListPlaceholder
+                  text={`No results found for "${searchQuery}"`}
+                />
+              ) : (
+                <EmptyListPlaceholder />
+              )
+            }
             scrollEnabled={!!results?.length}
           />
         </Container>

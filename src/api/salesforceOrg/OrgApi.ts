@@ -1,19 +1,16 @@
 import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+
+import { getUserCradentials } from "../../utils";
 
 const OrgApi = axios.create();
 
 OrgApi.interceptors.request.use(
   async (config) => {
-    const token = await AsyncStorage.getItem("access_token");
-    const url = await AsyncStorage.getItem("instance_url");
+    const cradentials = await getUserCradentials();
     config.headers = {};
-
-    if (token) {
-      config.headers.Authorization = "Bearer " + token;
-    }
-    if (url) {
-      config.baseURL = url;
+    if (cradentials) {
+      config.headers.Authorization = "Bearer " + cradentials?.token;
+      config.baseURL = cradentials?.baseUrl || undefined;
     }
     return config;
   },

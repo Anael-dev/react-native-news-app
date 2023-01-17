@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback } from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
@@ -44,23 +44,7 @@ const NewsItem: React.FC<NewsItemProps> = ({ data }) => {
   } = data;
   const navigation = useNavigation<NavigationType>();
 
-  const articleImage = useMemo((): JSX.Element => {
-    if (urlToImage) {
-      return <ItemImage source={{ uri: urlToImage }} />;
-    } else {
-      return (
-        <ItemImage
-          source={{
-            uri: PLACEHOLDER_IMAGE_URL,
-          }}
-        />
-      );
-    }
-  }, [urlToImage]);
-
-  const formattedPublishedDate = useMemo((): string => {
-    return new Date(publishedAt).toLocaleString();
-  }, [publishedAt]);
+  const formattedPublishedDate = new Date(publishedAt).toLocaleString();
 
   const handlePress = useCallback(() => {
     if (navigation.isFocused()) {
@@ -82,7 +66,7 @@ const NewsItem: React.FC<NewsItemProps> = ({ data }) => {
       <ItemTitle numberOfLines={2}>{title}</ItemTitle>
       <ItemPublishedDate>{formattedPublishedDate}</ItemPublishedDate>
       <ItemContent>
-        {articleImage}
+        <ItemImage source={{ uri: urlToImage || PLACEHOLDER_IMAGE_URL }} />
         <ItemText>{description?.substring(0, MAX_DESCRIPTION_CHARS)}</ItemText>
       </ItemContent>
     </TouchableContainer>

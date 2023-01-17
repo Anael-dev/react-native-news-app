@@ -10,7 +10,7 @@ type LoaderProps = {
 const Loader: React.FC<LoaderProps> = ({ size = 24, color = "black" }) => {
   return (
     <Wrapper>
-      <Feather name="loader" size={size} color="black" />
+      <Feather name="loader" size={size} color={color} />
     </Wrapper>
   );
 };
