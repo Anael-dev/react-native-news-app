@@ -2,6 +2,7 @@ import { AntDesign } from "@expo/vector-icons";
 import React, { useCallback, useMemo } from "react";
 import { TouchableOpacity } from "react-native";
 import { useMutation, useQueryClient } from "react-query";
+import Toast from "react-native-toast-message";
 
 import {
   deleteFavorite,
@@ -23,15 +24,35 @@ const FavoriteButton: React.FC<ButtonProps> = ({
 
   const addFavoriteMutation = useMutation({
     mutationFn: insertFavorite,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["favorites"] });
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["favorites"] });
+      Toast.show({
+        type: "success",
+        text1: "Added to your Favorties :)",
+      });
+    },
+    onError: () => {
+      Toast.show({
+        type: "error",
+        text1: "Houston, we have a problem",
+      });
     },
   });
 
   const deleteFavoriteMutation = useMutation({
     mutationFn: deleteFavorite,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["favorites"] });
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["favorites"] });
+      Toast.show({
+        type: "success",
+        text1: "Removed from your Favorites :)",
+      });
+    },
+    onError: () => {
+      Toast.show({
+        type: "error",
+        text1: "Houston, we have a problem",
+      });
     },
   });
 

@@ -3,6 +3,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { QueryClientProvider, QueryClient } from "react-query";
 import { StatusBar } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Toast from "react-native-toast-message";
 
 import Navigator from "./components/Navigator";
 import fetchAccsessToken from "./api/salesforceAuth/fetchAccessToken";
@@ -29,6 +30,7 @@ export default function App() {
         <StatusBar animated />
         <FavoritesContextProvider>
           <Navigator />
+          <Toast position="bottom" />
         </FavoritesContextProvider>
       </SafeAreaProvider>
     </QueryClientProvider>
