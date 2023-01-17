@@ -40,7 +40,7 @@ const CategoryButton = styled(TouchableOpacity)<{
   padding-vertical: 8px;
   margin-vertical: 5px;
   margin: 5px;
-  background-color: ${({ isSelected }) => (isSelected ? "#00B49F" : "#01F0D9")};
+  background-color: ${({ isSelected }) => (isSelected ? "#8E8E8E" : "#cccc")};
 `;
 
 const CategoryText = styled(Text)<{

@@ -10,6 +10,7 @@ import SearchBar from "../../components/SearchBar";
 import fetchNewsAction from "../../api/newsApi/fetchNewsAction";
 import NewsItem, { Article } from "../../components/NewsItem";
 import EmptyListPlaceholder from "../../components/EmptyListPlaceholder";
+import Loader from "../../components/Loader";
 
 export interface NewsResponseType {
   status: string;
@@ -49,7 +50,7 @@ function NewsHub() {
 
   const emptyListView = useMemo((): JSX.Element => {
     if (isLoading || isFetching) {
-      return <EmptyListPlaceholder text="Loading..." />;
+      return <Loader />;
     }
     if (searchQuery) {
       return (

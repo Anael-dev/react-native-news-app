@@ -1,12 +1,6 @@
 import React, { useCallback, useMemo } from "react";
-import {
-  Image,
-  Text,
-  TouchableOpacity,
-  useWindowDimensions,
-} from "react-native";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import RenderHtml from "react-native-render-html";
 
 import {
   IMAGE_SIZE,
@@ -48,8 +42,6 @@ const NewsItem: React.FC<NewsItemProps> = ({ data }) => {
     url,
     id,
   } = data;
-
-  const { width } = useWindowDimensions();
   const navigation = useNavigation<NavigationType>();
 
   const articleImage = useMemo((): JSX.Element => {
@@ -87,10 +79,12 @@ const NewsItem: React.FC<NewsItemProps> = ({ data }) => {
 
   return (
     <TouchableContainer activeOpacity={0.7} onPress={handlePress}>
-      <RenderHtml contentWidth={width} source={{ html: title }} />
-      <ItemText>{formattedPublishedDate}</ItemText>
-      {articleImage}
-      <ItemText>{description?.substring(0, MAX_DESCRIPTION_CHARS)}</ItemText>
+      <ItemTitle numberOfLines={2}>{title}</ItemTitle>
+      <ItemPublishedDate>{formattedPublishedDate}</ItemPublishedDate>
+      <ItemContent>
+        {articleImage}
+        <ItemText>{description?.substring(0, MAX_DESCRIPTION_CHARS)}</ItemText>
+      </ItemContent>
     </TouchableContainer>
   );
 };
@@ -100,18 +94,45 @@ const TouchableContainer = styled(TouchableOpacity)`
   padding-horizontal: 16px;
   padding-vertical: 8px;
   margin: 10px;
-  background-color: #efefef;
-  border-width: 1px;
+  background-color: #eeeee;
+  border-width: 0.5px;
   border-color: #9d9d9d;
+  height: 160px;
+`;
+
+const ItemContent = styled(View)`
+  flex-direction: row;
+  flex: 1;
+  padding-vertical: 10px;
+  justify-content: space-between;
 `;
 
 const ItemText = styled(Text)`
-  font-size: 14px;
-  padding-vertical: 5px;
+  font-size: 12px;
+  font-weight: 200;
+  font-family: Helvetica;
+  padding-left: 10px;
+  flex: 0.7;
+`;
+
+const ItemPublishedDate = styled(Text)`
+  font-size: 12px;
+  font-weight: 200;
+  font-family: Helvetica;
+  opacity: 0.8;
 `;
 
 const ItemImage = styled(Image)`
   width: ${IMAGE_SIZE}px;
   height: ${IMAGE_SIZE}px;
+  border-radius: 5px;
+  flex: 0.3;
 `;
+
+const ItemTitle = styled(Text)`
+  font-weight: 600;
+  font-family: Helvetica;
+  color: #333;
+`;
+
 export default NewsItem;

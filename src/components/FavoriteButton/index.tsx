@@ -37,7 +37,7 @@ const FavoriteButton: React.FC<ButtonProps> = ({
 
   const isFavorite = useMemo(() => !!favorites?.[id], [favorites]);
 
-  const handleToggleStarPress = useCallback(async () => {
+  const handleToggleStarPress = useCallback(() => {
     if (isFavorite) {
       deleteFavoriteMutation.mutate(id);
     } else {
