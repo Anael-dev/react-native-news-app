@@ -9,6 +9,7 @@ import Navigator from "./components/Navigator";
 import fetchAccsessToken from "./api/salesforceAuth/fetchAccessToken";
 import { FavoritesContextProvider } from "./context/FavoritesContext";
 import { storeUserCradentials } from "./utils";
+import { createUserSession } from "./api/salesforceOrg/userSession";
 
 const queryClient = new QueryClient();
 
@@ -16,7 +17,8 @@ function App() {
   const initializeUserSession = useCallback(async (): Promise<void> => {
     const response = await fetchAccsessToken();
     if (response) {
-      storeUserCradentials(response.access_token, response.instance_url);
+      await storeUserCradentials(response.access_token, response.instance_url);
+      await createUserSession();
     }
   }, [fetchAccsessToken]);
 

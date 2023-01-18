@@ -4,10 +4,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import styled from "styled-components";
 
 import { RootStackParamList } from "../../components/Navigator";
-import insertUserReview from "../../api/salesforceOrg/insertUserReview";
 import Navbar from "../../components/Navbar";
 import ArticleContent from "./ArticleContent";
 import FavoriteArticleButton from "./FavoriteArticleButton";
+import { addArticleToUserSession } from "../../api/salesforceOrg/userArticleSession";
 
 type ArticeleScreenRouteProp = RouteProp<RootStackParamList, "Article">;
 
@@ -17,7 +17,7 @@ function Article() {
   } = useRoute<ArticeleScreenRouteProp>();
 
   const handlePageMount = useCallback(
-    () => insertUserReview({ title, link, id }),
+    () => addArticleToUserSession({ title, link, id }),
     [title, link, id]
   );
 
