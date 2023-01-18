@@ -27,21 +27,16 @@ export interface Source {
   name: string;
 }
 
-type NewsItemProps = {
-  data: ArticleWithId;
-};
-
-const NewsItem: React.FC<NewsItemProps> = ({ data }) => {
-  const {
-    title,
-    publishedAt,
-    urlToImage,
-    description,
-    content,
-    author,
-    url,
-    id,
-  } = data;
+const NewsItem: React.FC<ArticleWithId> = ({
+  title,
+  publishedAt,
+  urlToImage,
+  description,
+  content,
+  author,
+  url,
+  id,
+}) => {
   const navigation = useNavigation<NavigationType>();
 
   const formattedPublishedDate = new Date(publishedAt).toLocaleString();

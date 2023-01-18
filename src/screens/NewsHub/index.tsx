@@ -39,7 +39,7 @@ function NewsHub() {
   const keyExtractor = (item: Article) => `${item.publishedAt}${item.title}`;
 
   const renderItem: ListRenderItem<ArticleWithId> = ({ item }): JSX.Element => {
-    return <NewsItem data={item} />;
+    return <NewsItem {...{ ...item }} />;
   };
 
   return (

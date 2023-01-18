@@ -8,15 +8,8 @@ export type FavoritesContextValue = {
 };
 
 type Favorite = {
-  [articleId: string]: FavoriteValues;
+  [articleId: string]: number;
 };
-
-interface FavoriteValues {
-  Id: string;
-  Title__c: string;
-  Link__c: string;
-  Article_Id__c: string;
-}
 
 type ContextProps = {
   children: JSX.Element[] | JSX.Element;
