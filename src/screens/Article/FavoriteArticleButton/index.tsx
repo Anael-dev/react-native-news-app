@@ -1,19 +1,19 @@
 import { AntDesign } from "@expo/vector-icons";
 import React, { useCallback, useMemo } from "react";
-import { TouchableOpacity } from "react-native";
 import { useMutation, useQueryClient } from "react-query";
 import Toast from "react-native-toast-message";
 
+import { useFavoritesContext } from "../../../context/useFavoriteContext";
 import {
   deleteFavorite,
   InsertArgs,
   insertFavorite,
-} from "../../api/salesforceOrg/favoritesActions";
-import { useFavoritesContext } from "../../context/useFavoriteContext";
+} from "../../../api/salesforceOrg/favoritesActions";
+import Button from "../../../components/Button";
 
 type ButtonProps = InsertArgs;
 
-const FavoriteButton: React.FC<ButtonProps> = ({
+const FavoriteArticleButton: React.FC<ButtonProps> = ({
   title,
   link,
   description,
@@ -72,10 +72,17 @@ const FavoriteButton: React.FC<ButtonProps> = ({
   }, [isFavorite]);
 
   return (
-    <TouchableOpacity onPress={handleToggleStarPress}>
-      <AntDesign name={isFavorite ? "star" : "staro"} size={24} color="black" />
-    </TouchableOpacity>
+    <Button
+      onPress={handleToggleStarPress}
+      icon={
+        <AntDesign
+          name={isFavorite ? "star" : "staro"}
+          size={24}
+          color="black"
+        />
+      }
+    />
   );
 };
 
-export default FavoriteButton;
+export default FavoriteArticleButton;

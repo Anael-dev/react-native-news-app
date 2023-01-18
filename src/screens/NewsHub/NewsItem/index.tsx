@@ -8,8 +8,8 @@ import {
   PLACEHOLDER_IMAGE_URL,
 } from "./consts";
 import styled from "styled-components";
-import { NavigationType } from "../Navigator";
-import { ArticleWithId } from "../../screens/NewsHub";
+import { NavigationType } from "../../../components/Navigator";
+import { ArticleWithId } from "..";
 
 export interface Article {
   author: null | string;

@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from "react";
+import React, { createContext } from "react";
 import { useQuery } from "react-query";
 
 import { getAllFavorites } from "../api/salesforceOrg/favoritesActions";
@@ -29,10 +29,7 @@ export const FavoritesContext = createContext<FavoritesContextValue | null>(
 export const FavoritesContextProvider: React.FC<ContextProps> = ({
   children,
 }) => {
-  const { data, refetch, isLoading, isFetching } = useQuery(
-    ["favorites"],
-    getAllFavorites
-  );
+  const { data } = useQuery(["favorites"], getAllFavorites);
 
   return (
     <FavoritesContext.Provider value={{ favorites: data }}>

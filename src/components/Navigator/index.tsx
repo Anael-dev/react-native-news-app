@@ -5,7 +5,7 @@ import {
 } from "@react-navigation/stack";
 
 import Article from "../../screens/Article";
-import { Article as ArticleInterface } from "../NewsItem";
+import { Article as ArticleInterface } from "../../screens/NewsHub/NewsItem";
 import NewsHub from "../../screens/NewsHub";
 
 interface AricleScreenParams

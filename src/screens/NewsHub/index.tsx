@@ -5,10 +5,10 @@ import { KeyboardAwareFlatList } from "react-native-keyboard-aware-scroll-view";
 import { useQuery } from "react-query";
 import styled from "styled-components";
 
-import Categories from "../../components/Categories";
-import SearchBar from "../../components/SearchBar";
+import Categories from "./Categories";
+import SearchBar from "./SearchBar";
 import fetchNewsAction from "../../api/newsApi/fetchNewsAction";
-import NewsItem, { Article } from "../../components/NewsItem";
+import NewsItem, { Article } from "./NewsItem";
 import EmptyListPlaceholder from "../../components/EmptyListPlaceholder";
 import Loader from "../../components/Loader";
 

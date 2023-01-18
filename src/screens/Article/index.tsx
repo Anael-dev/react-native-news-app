@@ -5,9 +5,9 @@ import styled from "styled-components";
 
 import { RootStackParamList } from "../../components/Navigator";
 import insertUserReview from "../../api/salesforceOrg/insertUserReview";
-import FavoriteButton from "../../components/FavoriteButton";
 import Navbar from "../../components/Navbar";
 import ArticleContent from "./ArticleContent";
+import FavoriteArticleButton from "./FavoriteArticleButton";
 
 type ArticeleScreenRouteProp = RouteProp<RootStackParamList, "Article">;
 
@@ -29,7 +29,7 @@ function Article() {
     <SafeAreaViewContainer>
       <Navbar
         rightActionButton={
-          <FavoriteButton
+          <FavoriteArticleButton
             {...{
               title,
               link,

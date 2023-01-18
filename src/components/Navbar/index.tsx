@@ -6,7 +6,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import styled from "styled-components";
 
 type NavbarProps = {
-  rightActionButton: JSX.Element;
+  rightActionButton?: JSX.Element;
 };
 
 const Navbar: React.FC<NavbarProps> = ({ rightActionButton = null }) => {
