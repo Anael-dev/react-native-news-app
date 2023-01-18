@@ -3,6 +3,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { QueryClientProvider, QueryClient } from "react-query";
 import { StatusBar } from "react-native";
 import Toast from "react-native-toast-message";
+import { registerRootComponent } from "expo";
 
 import Navigator from "./components/Navigator";
 import fetchAccsessToken from "./api/salesforceAuth/fetchAccessToken";
@@ -11,7 +12,7 @@ import { storeUserCradentials } from "./utils";
 
 const queryClient = new QueryClient();
 
-export default function App() {
+function App() {
   const initializeUserSession = useCallback(async (): Promise<void> => {
     const response = await fetchAccsessToken();
     if (response) {
@@ -35,3 +36,5 @@ export default function App() {
     </QueryClientProvider>
   );
 }
+
+export default registerRootComponent(App);
