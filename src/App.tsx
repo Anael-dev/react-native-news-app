@@ -1,18 +1,42 @@
+import { useCallback, useEffect } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { QueryClientProvider, QueryClient } from "react-query";
 import { StatusBar } from "react-native";
+import Toast from "react-native-toast-message";
+import { registerRootComponent } from "expo";
 
 import Navigator from "./components/Navigator";
+import fetchAccsessToken from "./api/salesforceAuth/fetchAccessToken";
+import { FavoritesContextProvider } from "./context/FavoritesContext";
+import { storeUserCradentials } from "./utils";
+import { createUserSession } from "./api/salesforceOrg/userSession";
 
 const queryClient = new QueryClient();
 
-export default function App() {
+function App() {
+  const initializeUserSession = useCallback(async (): Promise<void> => {
+    const response = await fetchAccsessToken();
+    if (response) {
+      await storeUserCradentials(response.access_token, response.instance_url);
+      await createUserSession();
+    }
+  }, [fetchAccsessToken]);
+
+  useEffect(() => {
+    initializeUserSession();
+  }, [initializeUserSession]);
+
   return (
     <QueryClientProvider client={queryClient}>
       <SafeAreaProvider>
         <StatusBar animated />
-        <Navigator />
+        <FavoritesContextProvider>
+          <Navigator />
+          <Toast position="bottom" />
+        </FavoritesContextProvider>
       </SafeAreaProvider>
     </QueryClientProvider>
   );
 }
+
+export default registerRootComponent(App);
